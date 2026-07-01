@@ -1,0 +1,32 @@
+name: CI Build Verification
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js Environment
+      uses: actions/setup-node@v3
+      with:
+        node-node-version: '18'
+        cache: 'npm'
+
+    - name: Build Backend Server
+      run: |
+        cd backend
+        npm install
+        
+    - name: Build Frontend Client
+      run: |
+        cd frontend
+        npm install
+        npm run build
